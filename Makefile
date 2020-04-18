@@ -12,6 +12,10 @@ ifndef OS
 	OS := unknown
 endif
 
+ifndef VENV_NAME
+	VENV_NAME := anki
+endif
+
 ifeq (${OS},Windows_NT)
 	# Windows terminal is confusing it with its `cmd` builtin `rename` command
 	ifndef RENAME_BIN
@@ -19,7 +23,7 @@ ifeq (${OS},Windows_NT)
 	endif
 
 	ifndef ACTIVATE_SCRIPT
-		ACTIVATE_SCRIPT := pyenv/Scripts/activate
+		ACTIVATE_SCRIPT := $(VENV_NAME)/Scripts/activate
 	endif
 
 	ifndef PYTHON_BIN
@@ -31,7 +35,7 @@ else
 	endif
 
 	ifndef ACTIVATE_SCRIPT
-		ACTIVATE_SCRIPT := pyenv/bin/activate
+		ACTIVATE_SCRIPT := $(VENV_NAME)/bin/activate
 	endif
 
 	ifndef PYTHON_BIN
@@ -64,13 +68,13 @@ pyenv:
 	# Expected `python` to be a python interpreter inside a virtualenv
 	set -eu -o pipefail ${SHELLFLAGS}; \
 	"${PYTHON_BIN}" -m pip install virtualenv; \
-	"${PYTHON_BIN}" -m venv pyenv; \
+	"${PYTHON_BIN}" -m venv $(VENV_NAME); \
 	case "$$(uname -s)" in CYGWIN*|MINGW*|MSYS*) \
 		dos2unix "${ACTIVATE_SCRIPT}"; \
 		VIRTUAL_ENV="$$(pwd)"; \
 		VIRTUAL_ENV="$$(cygpath -m "$${VIRTUAL_ENV}")"; \
-		sed -i -- "s@VIRTUAL_ENV=\".*\"@VIRTUAL_ENV=\"$$(pwd)/pyenv\"@g" "${ACTIVATE_SCRIPT}"; \
-		sed -i -- "s@export PATH@export PATH; VIRTUAL_ENV=\"$${VIRTUAL_ENV}/pyenv\";@g" "${ACTIVATE_SCRIPT}"; \
+		sed -i -- "s@VIRTUAL_ENV=\".*\"@VIRTUAL_ENV=\"$$(pwd)/$(VENV_NAME)\"@g" "${ACTIVATE_SCRIPT}"; \
+		sed -i -- "s@export PATH@export PATH; VIRTUAL_ENV=\"$${VIRTUAL_ENV}/$(VENV_NAME)\";@g" "${ACTIVATE_SCRIPT}"; \
 		;; esac; \
 	. "${ACTIVATE_SCRIPT}"; \
 	python --version; \
