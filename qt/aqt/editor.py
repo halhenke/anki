@@ -22,6 +22,8 @@ import logging
 
 log = logging.getLogger("Hal")
 log.setLevel(logging.INFO)
+from icecream import ic
+
 import aqt
 import aqt.sound
 from anki.cards import Card
@@ -918,6 +920,7 @@ to a cloze type first, via Edit>Change Note Type."""
         )
 
     def onPaste(self):
+        ic()
         self.web.onPaste()
 
     def onCutOrCopy(self):
@@ -998,6 +1001,7 @@ to a cloze type first, via Edit>Change Note Type."""
 class EditorWebView(AnkiWebView):
     def __init__(self, parent, editor):
         # print("Editor Webview __init__")
+        ic()
         AnkiWebView.__init__(self, title="editor")
         self.editor = editor
         self.strip = self.editor.mw.pm.profile["stripHTML"]
@@ -1121,6 +1125,7 @@ class EditorWebView(AnkiWebView):
         return txt
 
     def _processHtml(self, mime):
+        ic()
         if not mime.hasHtml():
             return None, False
         html = mime.html()

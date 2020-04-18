@@ -19,9 +19,12 @@ from aqt.utils import (
     showInfo,
 )
 
+from icecream import ic
+
 
 class Models(QDialog):
     def __init__(self, mw: AnkiQt, parent=None, fromMain=False):
+        ic()
         self.mw = mw
         parent = parent or mw
         self.fromMain = fromMain
@@ -86,12 +89,14 @@ class Models(QDialog):
         self.form.modelsList.setCurrentRow(row)
 
     def modelChanged(self):
+        ic()
         if self.model:
             self.saveModel()
         idx = self.form.modelsList.currentRow()
         self.model = self.models[idx]
 
     def onAdd(self):
+        ic()
         m = AddModel(self.mw, self).get()
         if m:
             txt = getText(_("Name:"), default=m["name"])[0]

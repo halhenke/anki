@@ -19,6 +19,8 @@ from aqt.sound import av_player
 from aqt.toolbar import BottomBar
 from aqt.utils import askUser, getOnlyText, openLink, shortcut, showWarning, tr
 
+from icecream import ic
+
 
 class DeckBrowserBottomBar:
     def __init__(self, deck_browser: DeckBrowser):
@@ -43,12 +45,14 @@ class DeckBrowser:
     _dueTree: Any
 
     def __init__(self, mw: AnkiQt) -> None:
+        ic()
         self.mw = mw
         self.web = mw.web
         self.bottom = BottomBar(mw, mw.bottomWeb)
         self.scrollPos = QPoint(0, 0)
 
     def show(self):
+        ic()
         av_player.stop_and_clear_queue()
         self.web.set_bridge_command(self._linkHandler, self)
         self._renderPage()
@@ -105,6 +109,7 @@ class DeckBrowser:
 """
 
     def _renderPage(self, reuse=False):
+        ic()
         if not reuse:
             self._dueTree = self.mw.col.sched.deckDueTree()
             self.__renderPage(None)

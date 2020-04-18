@@ -15,6 +15,8 @@ from aqt.qt import *
 from aqt.theme import theme_manager
 from aqt.utils import openLink
 
+from icecream import ic
+
 serverbaseurl = re.compile(r"^.+:\/\/[^\/]+")
 
 # Page for debug messages
@@ -57,9 +59,9 @@ class AnkiWebPage(QWebEnginePage):  # type: ignore
                             cb(JSON.parse(res));
                         }
                     }
-                
+
                     channel.objects.py.cmd(arg, resultCB);
-                    return false;                   
+                    return false;
                 }
                 pycmd("domDone");
             });
@@ -136,7 +138,7 @@ class WebContent:
         changes only perform the minimum requried edits to make your add-on work.
         You should avoid overwriting or interfering with existing data as much
         as possible, instead opting to append your own changes, e.g.:
-        
+
             def on_webview_will_set_content(web_content: WebContent, context):
                 web_content.body += "<my_html>"
                 web_content.head += "<my_head>"
@@ -145,28 +147,28 @@ class WebContent:
           media server. All list members without a specified subpath are assumed
           to be located under `/_anki`, which is the media server subpath used
           for all web assets shipped with Anki.
-          
+
           Add-ons may expose their own web assets by utilizing
           aqt.addons.AddonManager.setWebExports(). Web exports registered
           in this manner may then be accessed under the `/_addons` subpath.
-          
+
           E.g., to allow access to a `my-addon.js` and `my-addon.css` residing
           in a "web" subfolder in your add-on package, first register the
           corresponding web export:
-          
+
           > from aqt import mw
           > mw.addonManager.setWebExports(__name__, r"web/.*(css|js)")
-          
+
           Then append the subpaths to the corresponding web_content fields
           within a function subscribing to gui_hooks.webview_will_set_content:
-          
+
               def on_webview_will_set_content(web_content: WebContent, context):
                   addon_package = mw.addonManager.addonFromModule(__name__)
                   web_content.css.append(
                       f"/_addons/{addon_package}/web/my-addon.css")
                   web_content.js.append(
                       f"/_addons/{addon_package}/web/my-addon.js")
-          
+
           Note that '/' will also match the os specific path separator.
     """
 
@@ -184,6 +186,7 @@ class AnkiWebView(QWebEngineView):  # type: ignore
     def __init__(
         self, parent: Optional[QWidget] = None, title: str = "default"
     ) -> None:
+        ic()
         QWebEngineView.__init__(self, parent=parent)  # type: ignore
         self.title = title
         self._page = AnkiWebPage(self._onBridgeCmd)
@@ -376,14 +379,14 @@ border-radius:5px; font-family: Helvetica }"""
             fontspec = 'font-size:14px;font-family:"%s";' % family
             widgetspec = """
 /* Buttons */
-button{ 
+button{
         background-color: %(color_btn)s;
         font-family:"%(family)s"; }
 button:focus{ border-color: %(color_hl)s }
 button:active, button:active:hover { background-color: %(color_hl)s; color: %(color_hl_txt)s;}
 /* Input field focus outline */
 textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus,
-div[contenteditable="true"]:focus {   
+div[contenteditable="true"]:focus {
     outline: 0 none;
     border-color: %(color_hl)s;
 }""" % {
@@ -411,7 +414,7 @@ div[contenteditable="true"]:focus {
 body {{ zoom: {}; background: {}; {} }}
 {}
 </style>
-  
+
 {}
 </head>
 

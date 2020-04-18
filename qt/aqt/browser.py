@@ -56,6 +56,8 @@ from aqt.utils import (
 )
 from aqt.webview import AnkiWebView
 
+from icecream import ic
+
 
 @dataclass
 class FindDupesDialog:
@@ -77,6 +79,7 @@ class SearchContext:
 
 class DataModel(QAbstractTableModel):
     def __init__(self, browser: Browser):
+        ic()
         QAbstractTableModel.__init__(self)
         self.browser = browser
         self.col = browser.col
@@ -88,6 +91,7 @@ class DataModel(QAbstractTableModel):
         self.cardObjs: Dict[int, Card] = {}
 
     def getCard(self, index: QModelIndex) -> Card:
+        ic()
         id = self.cards[index.row()]
         if not id in self.cardObjs:
             self.cardObjs[id] = self.col.getCard(id)
