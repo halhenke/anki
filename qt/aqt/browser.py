@@ -852,7 +852,7 @@ class Browser(QMainWindow):
             grid = theme_manager.str_color("frame-bg")
             self.form.tableView.setStyleSheet(
                 f"""
-QTableView {{ gridline-color: {grid} }}           
+QTableView {{ gridline-color: {grid} }}
             """
             )
         self.singleCard = False

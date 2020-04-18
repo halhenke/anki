@@ -31,7 +31,7 @@ class DeckBrowserBottomBar:
 class DeckBrowserContent:
     """Stores sections of HTML content that the deck browser will be
     populated with.
-    
+
     Attributes:
         tree {str} -- HTML of the deck tree section
         stats {str} -- HTML of the stats section
