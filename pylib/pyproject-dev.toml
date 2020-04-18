@@ -1,0 +1,15 @@
+[tool]
+[tool.poetry]
+name = "tools"
+version = "0.0.0"
+
+[tool.poetry.dependencies]
+python = "*"
+black = "*"
+isort = {git = "https://github.com/ankitects/isort"}
+mypy = "*"
+mypy-protobuf = "*"
+pylint = {git = "https://github.com/ankitects/pylint"}
+pytest = "*"
+stringcase = "==1.2.0"
+wheel = "*"
