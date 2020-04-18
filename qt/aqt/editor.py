@@ -17,6 +17,11 @@ from typing import Callable, List, Optional, Tuple
 import requests
 from bs4 import BeautifulSoup
 
+# from logging import Logger
+import logging
+
+log = logging.getLogger("Hal")
+log.setLevel(logging.INFO)
 import aqt
 import aqt.sound
 from anki.cards import Card
@@ -410,6 +415,7 @@ class Editor:
             print("uncaught cmd", cmd)
 
     def mungeHTML(self, txt):
+        # log.info("mungeHTML called...")
         if txt in ("<br>", "<div><br></div>"):
             return ""
         return txt
@@ -419,6 +425,7 @@ class Editor:
 
     def setNote(self, note, hide=True, focusTo=None):
         "Make NOTE the current note."
+        # log.info("setNote called...")
         self.note = note
         self.currentField = None
         if self.note:
@@ -432,6 +439,7 @@ class Editor:
         self.loadNote(self.currentField)
 
     def loadNote(self, focusTo=None) -> None:
+        # log.info("loadNote called...")
         if not self.note:
             return
 
@@ -467,6 +475,7 @@ class Editor:
 
     def saveNow(self, callback, keepFocus=False):
         "Save unsaved edits then call callback()."
+        # log.info("saveNow called...")
         if not self.note:
             # calling code may not expect the callback to fire immediately
             self.mw.progress.timer(10, callback, False)
@@ -514,6 +523,7 @@ class Editor:
     ######################################################################
 
     def onHtmlEdit(self):
+        # log.info("onHTMLEdit called...")
         field = self.currentField
         self.saveNow(lambda: self._onHtmlEdit(field))
 
@@ -578,6 +588,7 @@ class Editor:
         gui_hooks.editor_did_update_tags(self.note)
 
     def saveAddModeVars(self):
+        # log.info("saveAddModeVars called..")
         if self.addMode:
             # save tags to model
             m = self.note.model()
