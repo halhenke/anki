@@ -225,3 +225,39 @@ push-i18n-ftl: pull-i18n
 .PHONY: push-i18n-po
 push-i18n-po: pull-i18n
 	(cd qt/po && scripts/upload-latest-template)
+
+# ===========
+# HAL STUFF::
+# ===========
+
+# .PHONY hal-develop
+# hal-develop:
+
+
+.PHONY: brew
+brew:
+	@brew install \
+		portaudio \
+		mpv
+
+.PHONY: redevelop
+redevelop: pyenv buildhash prepare
+	@set -eu -o pipefail ${SHELLFLAGS}; \
+	. "${ACTIVATE_SCRIPT}"; \
+	for dir in $(DEVEL); do \
+		$(SUBMAKE) -C $$dir develop DEVFLAGS="$(DEVFLAGS)"; \
+	done
+
+# .PHONY: brew
+# brew:
+# 	brew install \
+# 		python \
+# 		mpv \
+# 		lame \
+# 		portaudio \
+# 		protobuf \
+# 		npm \
+# 		rustup-init \
+# 		gettext \
+# 		rename \
+# 		ripgrep

@@ -55,6 +55,8 @@ DEPS := .build/tools .build/vernum ../meta/buildhash \
 	$(shell ${FIND} ./src -type f)
 
 .build/develop: $(DEPS)
+	echo "We are in VIRTUAL_ENV: $${VIRTUAL_ENV}"
+	echo "We are in CONDA_PREFIX: $${CONDA_PREFIX}"
 	touch ../proto/backend.proto
 	FTL_TEMPLATE_DIRS="$(QT_FTL_TEMPLATES)" FTL_LOCALE_DIRS="$(QT_FTL_LOCALES)" \
 		CARGO_TARGET_DIR="$(RSPY_TARGET_DIR)" maturin develop $(DEVFLAGS)
