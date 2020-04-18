@@ -416,6 +416,7 @@ class Editor:
 
     def mungeHTML(self, txt):
         # log.info("mungeHTML called...")
+        print("mungeHTML called...")
         if txt in ("<br>", "<div><br></div>"):
             return ""
         return txt
@@ -426,6 +427,7 @@ class Editor:
     def setNote(self, note, hide=True, focusTo=None):
         "Make NOTE the current note."
         # log.info("setNote called...")
+        print("setNote called...")
         self.note = note
         self.currentField = None
         if self.note:
@@ -440,6 +442,8 @@ class Editor:
 
     def loadNote(self, focusTo=None) -> None:
         # log.info("loadNote called...")
+        print("loadNote called...")
+
         if not self.note:
             return
 
@@ -476,6 +480,7 @@ class Editor:
     def saveNow(self, callback, keepFocus=False):
         "Save unsaved edits then call callback()."
         # log.info("saveNow called...")
+        print("saveNow called...")
         if not self.note:
             # calling code may not expect the callback to fire immediately
             self.mw.progress.timer(10, callback, False)
@@ -524,6 +529,7 @@ class Editor:
 
     def onHtmlEdit(self):
         # log.info("onHTMLEdit called...")
+        print("onHTMLEdit called...")
         field = self.currentField
         self.saveNow(lambda: self._onHtmlEdit(field))
 
@@ -589,6 +595,7 @@ class Editor:
 
     def saveAddModeVars(self):
         # log.info("saveAddModeVars called..")
+        print("saveAddModeVars called...")
         if self.addMode:
             # save tags to model
             m = self.note.model()
@@ -990,6 +997,7 @@ to a cloze type first, via Edit>Change Note Type."""
 
 class EditorWebView(AnkiWebView):
     def __init__(self, parent, editor):
+        # print("Editor Webview __init__")
         AnkiWebView.__init__(self, title="editor")
         self.editor = editor
         self.strip = self.editor.mw.pm.profile["stripHTML"]
